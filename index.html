@@ -180,6 +180,7 @@
             margin-bottom: 4px;
         }
 
+        /* 通常のカード用ボタンエリア */
         .heritage-actions {
             display: flex;
             justify-content: flex-end;
@@ -187,16 +188,19 @@
             margin-top: auto;
         }
 
-        /* ボタン */
+        /* ボタンの基本デザイン（幅と高さを固定します） */
         .action-btn {
             display: inline-block;
             text-align: center;
             text-decoration: none;
             font-size: 0.85rem;
-            padding: 8px 18px;
+            height: 38px;        /* ボタンの高さを完全に固定 */
+            line-height: 20px;   /* テキストが上下中央にくるように調整 */
+            padding: 8px 18px;   /* 左右のパディング */
             letter-spacing: 0.05em;
             transition: opacity 0.2s;
             font-family: sans-serif;
+            box-sizing: border-box; /* 線の太さを含めてサイズ計算する指定 */
         }
         .action-btn:hover {
             opacity: 0.8;
@@ -214,11 +218,71 @@
             border: 1px solid var(--btn-pdf-bg);
         }
 
+        /* ギタラ専用：ボタングループを右寄せする設定 */
+        .gitara-actions-container {
+            display: flex;
+            justify-content: flex-end; /* 右寄せ */
+            align-items: center;       /* 上下中央 */
+            flex-wrap: nowrap;
+            gap: 10px;                 /* 他のカードと同じ間隔 */
+            width: 100%;
+            margin-top: auto;          /* カードの最下部に固定 */
+        }
+        .gitara-nav-group {
+            display: flex;
+            gap: 4px;                  /* ナビボタン同士の間隔 */
+            flex-shrink: 1;
+        }
+        
+        /* ギタラの青いナビボタン：3つすべて完全に同じサイズに固定 */
+        .gitara-nav-btn {
+            font-size: 0.72rem;
+            padding: 8px 0;            /* 左右余白をリセットし、上下のみ */
+            width: 74px;               /* 幅を74pxに強制固定 */
+            height: 38px;              /* 高さも38pxに強制固定 */
+            white-space: nowrap;
+        }
+
+        /* ギタラの詳しく見るボタン：他のカードと100%同じ形にする設定 */
+        .gitara-btn-pdf {
+            width: 96px;               /* 他の「詳しく見る」とまったく同じ幅に固定 */
+            height: 38px;              /* 他の「詳しく見る」とまったく同じ高さに固定 */
+            padding: 8px 0;            /* 左右余白をリセット */
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* スマホ・タブレット等の全体レスポンシブ */
         @media (max-width: 768px) {
             .story-header { padding: 40px 15px; }
             .story-header h1 { font-size: 1.7rem; }
             .story-intro-banner { flex-direction: column; align-items: stretch; text-align: center; }
             .heritage-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ギタラ専用スマホ表示切り替え：本当に画面が狭いスマホ（縦向き）のみに適用 */
+        @media (max-width: 480px) {
+            .gitara-actions-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .gitara-nav-group {
+                display: flex;
+                width: 100%;
+                gap: 5px;
+            }
+            .gitara-nav-group .action-btn {
+                flex: 1;
+                width: auto; /* 横幅固定を解除 */
+                padding: 8px 0;
+                font-size: 0.75rem;
+                text-align: center;
+            }
+            .gitara-btn-pdf {
+                width: 100%; /* 横幅いっぱいに広げる */
+                padding: 8px 0;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -241,7 +305,10 @@
 
         <!-- カテゴリー1：海と絶景 -->
         <h2 class="section-title">海と絶景</h2>
-        <div class="heritage-card">
+        <div class="heritage-grid">
+            
+            <!-- ★ ギタラ合体カード（全ボタンが完全に統一された完璧なデザイン版） -->
+            <div class="heritage-card">
                 <div>
                     <span class="heritage-label">名勝・展望台・巨岩</span>
                     <h3 class="heritage-name">ギタラ展望台・陸ギタラ・海ギタラ</h3>
@@ -249,14 +316,18 @@
                         <div>所在地／沖縄県島尻郡伊是名村勢理客</div>
                     </div>
                 </div>
-                <!-- ボタンを並べるエリア（縦並びや崩れを防ぐため少し工夫しています） -->
-                <div class="heritage-actions" style="flex-wrap: wrap; gap: 8px;">
-                    <a href="https://www.google.com/maps/search/?api=1&query=ギタラ展望台" class="action-btn btn-map" target="_blank" style="font-size: 0.75rem; padding: 6px 10px;">展望台へ</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=陸ギタラ" class="action-btn btn-map" target="_blank" style="font-size: 0.75rem; padding: 6px 10px;">陸ギタラへ</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=海ギタラ" class="action-btn btn-map" target="_blank" style="font-size: 0.75rem; padding: 6px 10px;">海ギタラへ</a>
-                    <a href="gitara-tenbodai.pdf" class="action-btn btn-pdf" target="_blank" style="font-size: 0.75rem; padding: 6px 12px; margin-left: auto;">詳しく見る</a>
+                <!-- スマホとPCで自動切り替えされるボタングループ -->
+                <div class="gitara-actions-container">
+                    <div class="gitara-nav-group">
+                        <a href="https://www.google.com/maps/search/?api=1&query=ギタラ展望台" class="action-btn btn-map gitara-nav-btn" target="_blank">展望台へ</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=陸ギタラ" class="action-btn btn-map gitara-nav-btn" target="_blank">陸ギタラへ</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=海ギタラ" class="action-btn btn-map gitara-nav-btn" target="_blank">海ギタラへ</a>
+                    </div>
+                    <!-- 高さ・横幅を完全に他と統一した「詳しく見る」ボタン -->
+                    <a href="gitara-tenbodai.pdf" class="action-btn btn-pdf gitara-btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
+
             <div class="heritage-card">
                 <div>
                     <span class="heritage-label">ビーチ</span>
@@ -267,7 +338,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=マッテラ浜" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="mattera-hama.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -275,12 +346,12 @@
                     <span class="heritage-label">名勝・展望台</span>
                     <h3 class="heritage-name">シラサギ展望台</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村伊是名</div>
+                        <div>所在地／沖縄県島尻郡伊保存村伊使名</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=シラサギ展望台" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="shirasagi-tenbodai.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -288,15 +359,15 @@
                     <span class="heritage-label">自然景観</span>
                     <h3 class="heritage-name">ハート形のサンゴ礁♡</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村諸見５６５−４付近</div>
+                        <div>所在地／沖縄県島尻郡伊使名村諸見５６５−４付近</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=ハート形のサンゴ礁+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="heart-coral.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
-        </div>
+        </div> <!-- 海と絶景グループの閉じタグ -->
 
         <!-- カテゴリー2：山と巨岩 -->
         <h2 class="section-title">山と巨岩</h2>
@@ -311,7 +382,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=龍の口+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="tatsu-no-kuchi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -319,12 +390,12 @@
                     <span class="heritage-label">天然記念物・御嶽</span>
                     <h3 class="heritage-name">アハラ御嶽</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村仲田</div>
+                        <div>所在地／沖縄県島尻郡伊保存村仲田</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=アハラ御嶽+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="ahara-utaki.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -332,12 +403,12 @@
                     <span class="heritage-label">名勝・聖地</span>
                     <h3 class="heritage-name">神の岩座</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村伊是名</div>
+                        <div>所在地／沖縄県島尻郡伊是名村伊使名</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
-                    <a href="https://www.google.com/maps/search/?api=1&query=神の岩座+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=神の岩座+伊定名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
+                    <a href="kami-no-iwakura.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
         </div>
@@ -348,9 +419,9 @@
         <div class="story-intro-banner">
             <div class="intro-caption">
                 <h3>伊是名島の神アサギとは</h3>
-                <p>各集集落において伝統行事や祭祀が執り行われる、島を象徴する重要な有形民俗文化財です。</p>
+                <p>各集落において伝統行事や祭祀が執り行われる、島を象徴する重要な有形民俗文化財です。</p>
             </div>
-            <a href="#" class="action-btn btn-pdf" style="padding: 10px 25px;" target="_blank">「神アサギとは」を詳しく見る</a>
+            <a href="about-kami-asagi.pdf" class="action-btn btn-pdf" style="padding: 10px 25px;" target="_blank">「神アサギとは」を詳しく見る</a>
         </div>
 
         <div class="heritage-grid">
@@ -359,12 +430,12 @@
                     <span class="heritage-label">有形民俗文化財</span>
                     <h3 class="heritage-name">伊是名の神アサギ</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村伊是名841</div>
+                        <div>所在地／沖縄県島尻郡伊使名841</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
-                    <a href="https://www.google.com/maps/search/?api=1&query=伊是名の神アサギ" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=伊定名の神アサギ" class="action-btn btn-map" target="_blank">ここへ行く</a>
+                    <a href="izena-asagi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -377,7 +448,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=仲田の神アサギ" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="nakada-asagi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -390,7 +461,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=諸見の神アサギ" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="moromi-asagi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -403,7 +474,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=勢理客の神アサギ" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="serikyaku-asagi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
         </div>
@@ -421,7 +492,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=尚円王金丸像+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="kanamaru-zo.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -429,12 +500,12 @@
                     <span class="heritage-label">史跡</span>
                     <h3 class="heritage-name">みほそ所</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村諸見902</div>
+                        <div>所在地／沖縄県島尻郡伊使名村諸見902</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=みほそ所" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="mihosodokoro.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -447,7 +518,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=伊是名城跡" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="izena-joshi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -460,7 +531,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=伊是名玉御殿" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="tamaudun.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -473,7 +544,7 @@
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=逆田+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="sakasada.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
             <div class="heritage-card">
@@ -481,27 +552,24 @@
                     <span class="heritage-label">国指定重要文化財</span>
                     <h3 class="heritage-name">銘苅家住宅</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊定名村伊是名902</div>
+                        <div>所在地／沖縄県島尻郡伊定名村伊定名902</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=銘苅家住宅" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <a href="#" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
+                    <a href="mekarike.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
-            
-            <!-- ★ サムレー道カード（詳しく見るボタンにPDFリンクを埋め込みました） -->
             <div class="heritage-card">
                 <div>
                     <span class="heritage-label">史跡・名勝</span>
                     <h3 class="heritage-name">サムレー道</h3>
                     <div class="heritage-meta">
-                        <div>所在地／沖縄県島尻郡伊是名村伊是名（伊是名山）</div>
+                        <div>所在地／沖縄県島尻郡伊保存村伊是名（伊是名山）</div>
                     </div>
                 </div>
                 <div class="heritage-actions">
                     <a href="https://www.google.com/maps/search/?api=1&query=サムレー道+伊是名島" class="action-btn btn-map" target="_blank">ここへ行く</a>
-                    <!-- hrefのダブルクォーテーションの中に、メディアライブラリからコピーしたPDFのURLを入れてください -->
                     <a href="samure-michi.pdf" class="action-btn btn-pdf" target="_blank">詳しく見る</a>
                 </div>
             </div>
