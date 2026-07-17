@@ -159,16 +159,17 @@
             height: 100%;
             object-fit: cover;
         }
-        .card-img-title {
+          .card-img-title {
             position: absolute;
             top: 15px;
             left: 15px;
-            color: #ffffff;
+            color: #ffffff;         /* 白文字 */
             font-size: 1.3rem;
-            font-weight: bold;
+            font-weight: 500;       /* boldをやめて、元のマッテラ浜と同じ太さに変更 */
             margin: 0;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.8); 
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em; /* 元のマッテラ浜と同じ文字間隔に設定 */
+            /* 影（text-shadow）は削除しました */
+        }
         }
 
         /* 下部の文章エリアのスタイル */
